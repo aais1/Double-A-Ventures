@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const AdminLogin = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const navigate=useNavigate();
 
     const handleEmailChange = (e) => {
         setEmail(e.target.value);
@@ -14,7 +16,10 @@ const AdminLogin = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // todo
+        if(email==="admin@admin" && password==="admin"){
+            //to admin dashboard
+            navigate('/admin/dashboard')
+    };
     };
 
     return (
