@@ -11,20 +11,22 @@ import Layout from "./Layout.jsx";
 import { Provider } from "react-redux";
 import store from "./redux/store/store.js";
 import AdminLayout from "./AdminLayout.jsx";
-import { Login } from "./pages";
+import { Login , Home } from "./pages";
 import { AdminLogin , Analytics , ProductListing } from "./pages/admin";
 import NotFound from "./pages/admin/NotFound.jsx";
+import { CartProvider } from "./context/CartContext.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
       <Route path="/login" element={<Login />} />
       <Route path="/" element={<Layout />}>
-        <Route path="/" element={<>Logged in</>} />
+        <Route path="/" element={<Home/>} />
       </Route>
       <Route path="/admin" element={<AdminLogin />} />
       <Route path="/admin/login" element={<AdminLogin />} />
         <Route path="admin/dashboard" element={<AdminLayout />} >
+          <Route path="" element={<Analytics />}/>
           <Route path="analytics" element={<Analytics />} />
           <Route path="product-listings" element={<ProductListing/>} />
           <Route path="users" element={<>Users</>} />
@@ -37,7 +39,9 @@ const router = createBrowserRouter(
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <Provider store={store}>
-      <RouterProvider router={router} />
+      <CartProvider>
+        <RouterProvider router={router} />
+      </CartProvider>
     </Provider>
   </React.StrictMode>
 );
