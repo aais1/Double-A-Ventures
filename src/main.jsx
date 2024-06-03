@@ -7,10 +7,10 @@ import {
   createRoutesFromElements,
   RouterProvider,
 } from "react-router-dom";
-import Layout from "./Layout.jsx";
+import Layout from "./layouts/Layout.jsx";
 import { Provider } from "react-redux";
 import store from "./redux/store/store.js";
-import AdminLayout from "./AdminLayout.jsx";
+import AdminLayout from "./layouts/AdminLayout.jsx";
 import { Login , Home } from "./pages";
 import { AdminLogin , Analytics , ProductListing } from "./pages/admin";
 import NotFound from "./pages/admin/NotFound.jsx";
