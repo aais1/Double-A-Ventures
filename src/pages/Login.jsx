@@ -20,7 +20,10 @@ const Login = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        
+        if(email==='ali@ali' || password==='ali'){
+            navigate('../home')
+            dispatch(setUser({email:'ali'}))
+        }
     };
 
     const handleGoogleLogin=()=>{
