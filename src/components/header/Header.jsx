@@ -22,7 +22,7 @@ const Header = () => {
   function handleScroll(){
     if(window.scrollY > 100){
       headerRef.current.classList.add('sticky','top-0');
-    }else{
+    }else if(window.scrollY <8){
       headerRef.current.classList.remove('sticky','top-0');
     }
   }
