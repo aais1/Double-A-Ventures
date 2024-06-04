@@ -12,7 +12,7 @@ import { Provider } from "react-redux";
 import store from "./redux/store/store.js";
 import AdminLayout from "./layouts/AdminLayout.jsx";
 import { Login , Home } from "./pages";
-import { AdminLogin , Analytics , ProductListing } from "./pages/admin";
+import { AdminLogin , Analytics , ProductListing , Users } from "./pages/admin";
 import NotFound from "./pages/admin/NotFound.jsx";
 import { CartProvider } from "./context/CartContext.jsx";
 
@@ -30,7 +30,7 @@ const router = createBrowserRouter(
           <Route path="" element={<Analytics />}/>
           <Route path="analytics" element={<Analytics />} />
           <Route path="product-listings" element={<ProductListing/>} />
-          <Route path="users" element={<>Users</>} />
+          <Route path="users" element={<Users/>} />
       </Route>
       <Route path="*" element={<NotFound />} />
     </>
