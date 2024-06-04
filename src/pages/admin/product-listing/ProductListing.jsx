@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 
 const ProductListing = () => {
-    const [products, setProducts] = useState([]);
     const [newProduct, setNewProduct] = useState({
         name: '',
         price: '',
@@ -10,6 +9,15 @@ const ProductListing = () => {
     });
 
     const handleInputChange = (e) => {
+        //for file input
+        if(e.target.name === 'image') {
+            setNewProduct({
+                ...newProduct,
+                [e.target.name]: e.target.files[0],
+            });
+            return;
+        }
+
         setNewProduct({
             ...newProduct,
             [e.target.name]: e.target.value,
@@ -18,11 +26,13 @@ const ProductListing = () => {
     };
 
     const handleAddProduct = () => {
-        setProducts([...products, newProduct]);
+        console.log(newProduct)
+        //make the req
         setNewProduct({
             name: '',
             price: '',
             description: '',
+            image: '',
         });
     };
 
@@ -67,6 +77,7 @@ const ProductListing = () => {
                     type="file"
                     name="image"
                     onChange={handleInputChange}
+                    accept='image/*'
                     className="border border-gray-300 px-4 py-2 rounded w-[80vw] md:w-[50vw]"
                 />
             </div>
@@ -78,8 +89,19 @@ const ProductListing = () => {
                 Add Product
             </button>
 
-            <h2 className="text-xl font-bold mt-8">Product List</h2>
-            <ul>
+            {newProduct.image && (
+                <div className="mb-4">
+                    <label className="block mb-2">Image Preview:</label>
+                    <img
+                        src={URL.createObjectURL(newProduct.image)}
+                        alt="Product Image Preview"
+                        className="w-[200px] h-[200px] object-cover"
+                    />
+                </div>
+            )}
+
+            {/* <h2 className="text-xl font-bold mt-8">Product List</h2> */}
+            {/* <ul>
                 {products.map((product, index) => (
                     <li key={index} className="mb-4">
                         <h3 className="text-lg font-bold">{product.name}</h3>
@@ -87,7 +109,7 @@ const ProductListing = () => {
                         <p>Description: {product.description}</p>
                     </li>
                 ))}
-            </ul>
+            </ul> */}
         </div>
     );
 };
