@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import {useSelector , useDispatch} from 'react-redux'
 import { removeUser } from "../../redux/userSlice/userSlice";
 import { useNavigate } from "react-router-dom";
+import { AiOutlineShoppingCart } from "react-icons/ai";
 
 const Header = () => {
   const { showCart, setShowCart } = useCart();
@@ -12,7 +13,6 @@ const Header = () => {
   const dispatch=useDispatch();
   const navigate=useNavigate();
   const headerRef=useRef();
-  console.log(user)
 
   const handleLogout=()=>{
     dispatch(removeUser())
@@ -35,27 +35,21 @@ const Header = () => {
   },[])
 
   return (
-    <div className="bg-gray-800" ref={headerRef}>
+    <div className="bg-gray-800 z-50 " ref={headerRef}>
       <div className="container mx-auto px-4 py-2 flex items-center justify-between">
-        <div className="text-white text-lg font-semibold">Logo</div>
-        <nav className="space-x-4 flex">
-          <a className="text-white hover:text-gray-300" href="#">
-            Home
-          </a>
-          <a className="text-white hover:text-gray-300" href="#">
-            Products
-          </a>
-          <a
-            className="text-white hover:text-gray-300"
+        <div className="text-white text-2xl font-semibold">Logo</div>
+        <nav className="space-x-4 flex text-xl">
+          <button
+            className="text-white hover:text-gray-300 flex items-center gap-x-1"
             href="#"
             onClick={() => setShowCart(!showCart)}
           >
-            Cart
-          </a>
+            Cart <AiOutlineShoppingCart style={{fontSize:'1.5rem'}} />
+          </button>
           {
           !user?.email ? (
             <Link to="/login" className="text-white hover:text-gray-300">
-              Login Now
+              Login
             </Link>
           ) : user !== null && ( // added null check here
             <div className="relative">
@@ -68,7 +62,7 @@ const Header = () => {
             </div>
             {
               showMenu && 
-              <div className=" absolute top-10 flex flex-col gap-y-2 bg-white rounded-lg gap-1 font-semibold p-1">
+              <div className="z-30 absolute top-10 flex flex-col gap-y-2 bg-white rounded-lg gap-1 font-semibold p-1">
               <button className="px-4 py-2 hover:bg-blue-50 hover:text-black text-gray-600 rounded-lg" onClick={handleLogout}>Logout</button>
               {/* <button className="px-4 py-2 hover:bg-blue-50 hover:text-black text-gray-600 rounded-lg">Profile</button> */}
             </div>
