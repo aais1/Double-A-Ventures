@@ -1,46 +1,46 @@
 import React, { useState } from 'react';
+import { Upload } from '../../../components/admin';
+import axios from 'axios';
 
 const ProductListing = () => {
     const [newProduct, setNewProduct] = useState({
         name: '',
         price: '',
+        quantity: '',
+        category: '',
         description: '',
-        image: '',
+        images: [],
     });
 
     const handleInputChange = (e) => {
-        //for file input
-        if(e.target.name === 'image') {
-            setNewProduct({
-                ...newProduct,
-                [e.target.name]: e.target.files[0],
-            });
-            return;
-        }
-
         setNewProduct({
             ...newProduct,
             [e.target.name]: e.target.value,
         });
-        
-    };
-
-    const handleAddProduct = () => {
         console.log(newProduct)
+    };
+    
+
+    const handleAddProduct = async() => {
+
         //make the req
+        const resp=await axios.post('http://localhost:3000/products', newProduct);
+        console.log(resp.data);
         setNewProduct({
             name: '',
             price: '',
+            quantity: '',
+            category: '',
             description: '',
-            image: '',
+            images: [],
         });
     };
 
     return (
         <div className="container mx-auto">
-            <h1 className="text-2xl font-bold mb-4">Product Listing</h1>
+            <h1 className="text-2xl font-bold mb-2">Product Listing</h1>
 
-            <div className="mb-4">
+            <div className="mb-2">
                 <label className="block mb-2">Name:</label>
                 <input
                     type="text"
@@ -51,7 +51,7 @@ const ProductListing = () => {
                 />
             </div>
 
-            <div className="mb-4">
+            <div className="mb-2">
                 <label className="block mb-2">Price:</label>
                 <input
                     type="text"
@@ -62,7 +62,7 @@ const ProductListing = () => {
                 />
             </div>
 
-            <div className="mb-4">
+            <div className="mb-2">
                 <label className="block mb-2">Description:</label>
                 <textarea
                     name="description"
@@ -71,17 +71,37 @@ const ProductListing = () => {
                     className="border border-gray-300 px-4 py-2 rounded w-[80vw] md:w-[50vw] min-h-[200px]"
                 ></textarea>
             </div>
-            <div className="mb-4">
-                <label className="block mb-2">Image:</label>
+
+            <div className="mb-2">
+                <label htmlFor="category" className="block mb-2">Category:</label>
+                <select name="category" value={newProduct.category} id="category" onChange={handleInputChange}>
+                    <option value="1">Electronics</option>
+                    <option value="2" selected={true}>Clothing</option>
+                    <option value="3">Books</option>
+                    <option value="4">Home & Kitchen</option>
+                    <option value="5">Beauty & Personal Care</option>
+                    <option value="6">Sports & Outdoors</option>
+                    <option value="7">Toys & Games</option>
+                    <option value="8">Health & Wellness</option>
+                    <option value="9">Automotive</option>
+                    <option value="10">Jewelry & Accessories</option>
+                </select>
+            </div>
+
+            <div className="mb-2">
+                <label htmlFor="quantity" className="block mb-2">Quantity:</label>
                 <input
-                    type="file"
-                    name="image"
+                    type="text"
+                    name="quantity"
+                    value={newProduct.quantity}
                     onChange={handleInputChange}
-                    accept='image/*'
                     className="border border-gray-300 px-4 py-2 rounded w-[80vw] md:w-[50vw]"
                 />
             </div>
 
+            <Upload setNewProduct={setNewProduct} newProduct={newProduct}/>
+
+            
             <button
                 onClick={handleAddProduct}
                 className="bg-blue-500 text-white px-4 py-2 rounded "
@@ -89,21 +109,10 @@ const ProductListing = () => {
                 Add Product
             </button>
 
-            {newProduct.image && (
-                <div className="mb-4">
-                    <label className="block mb-2">Image Preview:</label>
-                    <img
-                        src={URL.createObjectURL(newProduct.image)}
-                        alt="Product Image Preview"
-                        className="w-[200px] h-[200px] object-cover"
-                    />
-                </div>
-            )}
-
             {/* <h2 className="text-xl font-bold mt-8">Product List</h2> */}
             {/* <ul>
                 {products.map((product, index) => (
-                    <li key={index} className="mb-4">
+                    <li key={index} className="mb-2">
                         <h3 className="text-lg font-bold">{product.name}</h3>
                         <p>Price: {product.price}</p>
                         <p>Description: {product.description}</p>
