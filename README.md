@@ -22,8 +22,8 @@ This project is an e-commerce store built using React.js and Tailwind CSS for st
 
 - React.js
 - Tailwind CSS
-- PHP
-- MSSQL
+- Express JS
+- MYSql
 
 ## Contributing
 
