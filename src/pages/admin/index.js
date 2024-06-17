@@ -7,5 +7,5 @@ export {
     AdminLogin,
     Analytics,
     ProductListing,
-    Users
+    Users,
 }

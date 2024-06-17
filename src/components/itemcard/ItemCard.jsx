@@ -3,8 +3,10 @@ import React from 'react';
 import Watch from '../../assets/watch.png'
 const ItemCard = ({ image, name, price, rating, bgColor }) => {
   return (
-    <div className="max-w-sm rounded overflow-hidden shadow-lg border border-gray-200">
-      <img className="w-full h-64 object-cover" src={ Watch } alt={name} />
+    <div className="max-w-sm cursor-pointer hover:shadow-2xl rounded overflow-hidden shadow-lg border border-gray-200">
+      <div className="overflow-hidden">
+      <img className=" hover:scale-[1.10] duration-150 object-cover" src={ Watch } alt={name} />
+      </div>
       <div className="px-6 py-4">
         <div className="font-bold text-xl mb-2">{name}</div>
         <p className="text-gray-700 text-base">Lorem ipsum dolor sit amet.</p>
@@ -18,7 +20,7 @@ const ItemCard = ({ image, name, price, rating, bgColor }) => {
         </div>
       </div>
       <div className="px-6 pt-4 pb-2">
-        <button className={`w-full text-white font-bold py-2 px-4 rounded`} style={{ backgroundColor: bgColor }}>
+        <button className={`w-full text-white font-bold py-2 px-4 rounded active:scale-[0.95] duration-100`} style={{ backgroundColor: bgColor }}>
           Add to Cart
         </button>
       </div>

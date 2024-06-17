@@ -11,7 +11,7 @@ import Layout from "./layouts/Layout.jsx";
 import { Provider } from "react-redux";
 import store from "./redux/store/store.js";
 import AdminLayout from "./layouts/AdminLayout.jsx";
-import { Login , Home } from "./pages";
+import { Login , Home , Product } from "./pages";
 import { AdminLogin , Analytics , ProductListing , Users } from "./pages/admin";
 import NotFound from "./pages/admin/NotFound.jsx";
 import { CartProvider } from "./context/CartContext.jsx";
@@ -23,6 +23,7 @@ const router = createBrowserRouter(
       <Route path="/" element={<Layout />}>
         <Route path="/" element={<Home/>} />
         <Route path="/home" element={<Home/>} />
+        <Route path="/product/:id" element={<Product/>} />
       </Route>
       <Route path="/admin" element={<AdminLogin />} />
       <Route path="/admin/login" element={<AdminLogin />} />

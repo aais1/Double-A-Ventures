@@ -10,7 +10,7 @@ import "swiper/css/navigation";
 const Gallery = () => {
   return (
     <Swiper
-      className="-z-10 h-[85vh]"
+      className="-z-10 md:h-[85vh]"
       spaceBetween={50}
       slidesPerView={1}
       onSlideChange={() => console.log("slide change")}

@@ -38,8 +38,6 @@ const Home = () => {
     <div className="bg-gray-100">
       <div className="container mx-auto py-8">
 
-        <Cart/>
-
         <Gallery/>
 
         <div className="mt-14 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 ">

@@ -25,7 +25,7 @@ const Login = () => {
         e.preventDefault();
         if(email==='ali@ali' || password==='ali'){
             navigate('../home')
-            dispatch(setUser({email:'ali'}))
+            dispatch(setUser({email:'ali@ali'}))
             console.log(isLogin ? 'Login form submitted' : 'Sign up form submitted', { email, password });
         }
     };
@@ -33,8 +33,8 @@ const Login = () => {
     const handleGoogleLogin=()=>{
         signInWithPopup(auth,googleProvider)
         .then((result)=>{
-            navigate('../home')
             dispatch(setUser(result.user))
+            navigate('../home')
         }).catch((err)=>{
             console.log(err)
         })
