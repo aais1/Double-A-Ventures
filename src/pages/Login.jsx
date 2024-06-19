@@ -3,6 +3,7 @@ import { auth, googleProvider,signInWithPopup } from '../firebase';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setUser } from '../redux/userSlice/userSlice';
+import axios from 'axios';
 import watchImage from '../assets/watch.png';
 
 
@@ -21,17 +22,48 @@ const Login = () => {
         setPassword(e.target.value);
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async  (e) => {
         e.preventDefault();
-        if(email==='ali@ali' || password==='ali'){
-            navigate('../home')
-            dispatch(setUser({email:'ali@ali'}))
-            console.log(isLogin ? 'Login form submitted' : 'Sign up form submitted', { email, password });
+
+        //if on login page
+        if(isLogin){
+          const {data}=await axios.post('http://localhost:3000/user/login',{
+            email,
+            password
+          });
+        
+          if(!data.user){
+            console.log(JSON.stringify(data))
+            alert(data.message);
+            return;
         }
-    };
+   
+          navigate('../home')
+          dispatch(setUser(data.user))
+          return;
+      }
+
+      const {data}=await axios.post('http://localhost:3000/user/signup',{
+        email,
+        password
+      });
+
+      if(data.message==='user exists'){
+        alert('User exists')
+        return;
+      }
+
+      if(data.message==='user created'){
+        alert('User created')
+        setIsLogin(true)
+        return;
+      }
+
+
+    }
 
     const handleGoogleLogin=()=>{
-        signInWithPopup(auth,googleProvider)
+      signInWithPopup(auth,googleProvider)
         .then((result)=>{
             dispatch(setUser(result.user))
             navigate('../home')
@@ -53,13 +85,13 @@ const Login = () => {
         <h2 className="text-3xl font-bold mb-6 text-gray-800">{isLogin ? 'Login' : 'Sign Up'}</h2>
         <form onSubmit={handleSubmit} className="w-full">
           <div className="mb-4">
-            <label className="block mb-2 text-gray-800">Username</label>
+            <label className="block mb-2 text-gray-800">Email</label>
             <input
               type="email"
               value={email}
               onChange={handleEmailChange}
-              className="w-full border border-gray-300 rounded px-3 py-2 bg-white bg-opacity-50"
-              placeholder="Type your username"
+              className="w-full border placeholder:text-white border-gray-300 rounded px-3 py-2 bg-white bg-opacity-50"
+              placeholder="Email"
             />
           </div>
           <div className="mb-6">
@@ -68,7 +100,7 @@ const Login = () => {
               type="password"
               value={password}
               onChange={handlePasswordChange}
-              className="w-full border border-gray-300 rounded px-3 py-2 bg-white bg-opacity-50"
+              className="w-full border placeholder:text-white border-gray-300 rounded px-3 py-2 bg-white bg-opacity-50"
               placeholder="Type your password"
             />
           </div>
