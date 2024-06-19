@@ -6,7 +6,7 @@ const Users = () => {
      const handleDelete=async(id)=>{
         try {
             console.log('try')
-            const {data}=await axios.delete('http://localhost:3000/user/'+id);
+            const {data}=await axios.delete(import.meta.env.VITE_SERVER_URL+'/user/'+id);
             setUsers(users.filter((user)=>user.id!==id))
         } catch (error) {
             console.log(error)

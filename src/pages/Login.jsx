@@ -27,7 +27,7 @@ const Login = () => {
 
         //if on login page
         if(isLogin){
-          const {data}=await axios.post('http://localhost:3000/user/login',{
+          const {data}=await axios.post(import.meta.env.VITE_SERVER_URL+'/user/login',{
             email,
             password
           });

@@ -24,7 +24,7 @@ const ProductListing = () => {
     const handleAddProduct = async() => {
 
         //make the req
-        const resp=await axios.post('http://localhost:3000/products', newProduct);
+        const resp=await axios.post(import.meta.env.VITE_SERVER_URL+'/products', newProduct);
         console.log(resp.data);
         setNewProduct({
             name: '',
