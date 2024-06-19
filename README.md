@@ -4,7 +4,7 @@ A semester project for a web course.
 
 ## Description
 
-This project is an e-commerce store built using React.js and Tailwind CSS for styling. The backend will be implemented in PHP, and the database will be MSSQL.
+This project is an e-commerce store built using React.js and Tailwind CSS for styling. The backend will be implemented in Express Js, and the database will be MYSQL.
 
 ## Features
 
