@@ -35,7 +35,7 @@ const Header = () => {
   },[])
 
   return (
-    <div className="bg-gray-800 z-50 " ref={headerRef}>
+    <div className="bg-black z-50 " ref={headerRef}>
       <div className="container mx-auto px-4 py-2 flex items-center justify-between">
         <div className="text-white text-2xl font-semibold">Logo</div>
         <nav className="space-x-4 flex text-xl">
