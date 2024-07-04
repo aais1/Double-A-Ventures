@@ -72,7 +72,7 @@ const CartModal = () => {
       onClick={handleClose}
     >
       <div
-        className="relative bg-white max-h-[80vh] md:w-[50vw] overflow-y-auto  p-8 rounded-lg shadow-lg  mx-4"
+        className="relative bg-white max-h-[80vh] w-[90vw] md:w-[50vw] overflow-y-auto p-8 rounded-lg shadow-lg  mx-4"
         onClick={(e) => e.stopPropagation()}
       >
         <button
