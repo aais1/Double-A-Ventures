@@ -27,28 +27,28 @@ const Gallery = () => {
     >
       <SwiperSlide>
         <img
-          className="mx-auto h-[100%] w-[90%]  rounded-2xl"
+          className="mx-auto h-[100%] w-[90%]  rounded-lg"
           src="https://images.pexels.com/photos/1488463/pexels-photo-1488463.jpeg?auto=compress&cs=tinysrgb&w=1200"
           alt=""
         />
       </SwiperSlide>
       <SwiperSlide>
         <img
-          className="mx-auto h-[100%] w-[90%]  rounded-2xl"
+          className="mx-auto h-[100%] w-[90%]  rounded-lg"
           src="https://images.pexels.com/photos/1488463/pexels-photo-1488463.jpeg?auto=compress&cs=tinysrgb&w=1200"
           alt=""
         />
       </SwiperSlide>
       <SwiperSlide>
         <img
-          className="mx-auto h-[100%] w-[90%]  rounded-2xl"
+          className="mx-auto h-[100%] w-[90%]  rounded-lg"
           src="https://images.pexels.com/photos/1488463/pexels-photo-1488463.jpeg?auto=compress&cs=tinysrgb&w=1200"
           alt=""
         />
       </SwiperSlide>
       <SwiperSlide>
         <img
-          className="mx-auto h-[100%] w-[90%]  rounded-2xl"
+          className="mx-auto h-[100%] w-[90%]  rounded-lg"
           src="https://images.pexels.com/photos/1488463/pexels-photo-1488463.jpeg?auto=compress&cs=tinysrgb&w=1200"
           alt=""
         />
