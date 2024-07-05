@@ -9,8 +9,10 @@ const Layout = () => {
       <Toaster/>
       <Header />
       <Cart/>
-      <Outlet />
-      <Footer />
+      <div className="mt-[70px]">
+        <Outlet />
+        <Footer />
+      </div>
     </div>
   )
 }

@@ -23,10 +23,10 @@ const Header = () => {
   };
 
   function handleScroll() {
-    if (window.scrollY > 100) {
-      headerRef.current.classList.add("sticky", "top-0");
-    } else if (window.scrollY < 8) {
-      headerRef.current.classList.remove("sticky", "top-0");
+    if(window.scrollY>100){
+    headerRef.current.style.opacity =0.95
+    }else{
+      headerRef.current.style.opacity =1
     }
   }
 
@@ -42,7 +42,7 @@ const Header = () => {
   },[search])
 
   return (
-    <div className="bg-black z-50 " ref={headerRef}>
+    <div className="bg-black fixed top-0 w-screen px-4 z-50" ref={headerRef}>
       <div className="container mx-auto px-4 py-3 flex items-center justify-between">
         <Link to="/"><div className="text-white text-2xl font-semibold font-mono">Double&apos;A</div></Link>
         <nav className="space-x-4 flex items-center text-xl">

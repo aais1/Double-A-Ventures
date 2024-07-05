@@ -80,24 +80,28 @@ const Product = () => {
     <div className="w-screen mx-auto  md:w-[95vw] p-1 md:p-4">
       <div className="flex  flex-col md:flex-row gap-y-8 md:gap-y-0 gap-x-8 my-2 ">
         <div className="flex h-[300px] gap-x-4 md:w-[45%] ">
-          <div className="flex-1">
+          <div className="w-[100%] overflow-hidden">
             <img
               src="https://images.pexels.com/photos/341523/pexels-photo-341523.jpeg?auto=compress&cs=tinysrgb&w=400"
-              className="bg-center  cursor-pointer  h-[100%] rounded-tl-md rounded-bl-md"
+              className="bg-center  cursor-pointer duration-150 hover:scale-105  h-[100%] rounded-tl-md rounded-bl-md"
               style={{ backgroundColor: "gray" }}
             />
           </div>
           <div className="flex flex-col gap-2">
-            <img
-              src="https://images.pexels.com/photos/341523/pexels-photo-341523.jpeg?auto=compress&cs=tinysrgb&w=400"
-              className="bg-center cursor-pointer h-[50%] gap-2 rounded-tr-md"
-              style={{ backgroundColor: "gray" }}
-            />
-            <img
-              src="https://images.pexels.com/photos/341523/pexels-photo-341523.jpeg?auto=compress&cs=tinysrgb&w=400"
-              className="bg-center cursor-pointer h-[50%] gap-2 rounded-br-md"
-              style={{ backgroundColor: "gray" }}
-            />
+            <div className="overflow-hidden w-[100%] h-[50%]">
+              <img
+                src="https://images.pexels.com/photos/341523/pexels-photo-341523.jpeg?auto=compress&cs=tinysrgb&w=400"
+                className="bg-center hover:scale-105 duration-150 cursor-pointer  gap-2 rounded-tr-md"
+                style={{ backgroundColor: "gray" }}
+              />
+            </div>
+            <div className="overflow-hidden w-[100%] h-[50%]">
+              <img
+                src="https://images.pexels.com/photos/341523/pexels-photo-341523.jpeg?auto=compress&cs=tinysrgb&w=400"
+                className="bg-center hover:scale-105 duration-150 cursor-pointer  gap-2 rounded-tr-md"
+                style={{ backgroundColor: "gray" }}
+              />
+            </div>
           </div>
         </div>
         <div className="flex-1 lg:w-[60%]">
