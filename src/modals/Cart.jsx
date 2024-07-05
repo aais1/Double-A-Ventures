@@ -54,7 +54,7 @@ const CartItem = ({ id, name, price, quantity }) => {
 
 const CartModal = () => {
 
-  const cartItems = useSelector((state) => state.cart.cartItems);
+  const {cartItems,totalAmount} = useSelector((state) => state.cart);
   const dispatch = useDispatch();
   const { showCart, setShowCart } = useCart();
 
@@ -85,11 +85,21 @@ const CartModal = () => {
         {cartItems.length === 0 ? (
           <p className="text-gray-700">Your cart is empty</p>
         ) : (
+          <>
           <ul className="space-y-4">
             {cartItems.map((item) => (
               <CartItem key={item.id} {...item} />
             ))}
           </ul>
+          <div className="text-right mb-2">
+            <p className="text-gray-500 font-semibold mt-2">Total</p>
+            <p className="font-bold">{totalAmount.toFixed(2)}$</p>
+          </div>
+          <button className={`w-full text-black border border-black hover:bg-black hover:text-white text-md md:text-lg  font-bold py-2 px-4 rounded active:scale-[0.95] duration-100`}
+        >
+          Checkout
+        </button>
+          </>
         )}
       </div>
     </div>
