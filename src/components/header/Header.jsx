@@ -12,13 +12,14 @@ const Header = () => {
   const { showCart, setShowCart } = useCart();
   const { user } = useSelector((state) => state.user);
   const [showMenu, setShowMenu] = useState(false);
+  const {totalQuantity}=useSelector(state=>state.cart)
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const headerRef = useRef();
 
   const handleLogout = () => {
     dispatch(removeUser());
-    navigate("/login");
+    // navigate("/login");
   };
 
   function handleScroll() {
@@ -42,8 +43,8 @@ const Header = () => {
 
   return (
     <div className="bg-black z-50 " ref={headerRef}>
-      <div className="container mx-auto px-4 py-2 flex items-center justify-between">
-        <div className="text-white text-2xl font-semibold font-mono">Double&apos;A</div>
+      <div className="container mx-auto px-4 py-3 flex items-center justify-between">
+        <Link to="/"><div className="text-white text-2xl font-semibold font-mono">Double&apos;A</div></Link>
         <nav className="space-x-4 flex items-center text-xl">
           <div className="relative">
             <input
@@ -58,7 +59,7 @@ const Header = () => {
               {/*Seaarch results here */}
             </div>
           </div>
-
+          <div className="relative">
           <button
             className="text-white hover:text-gray-300 flex items-center gap-x-1"
             href="#"
@@ -66,6 +67,10 @@ const Header = () => {
           >
             <AiOutlineShoppingCart onClick={()=>setShowMenu(false)} style={{ fontSize: "2.4rem" }} />
           </button>
+            <div className="bg-white text-sm font-bold absolute rounded-full px-2 py-1 -top-2 -right-2">
+              {totalQuantity || "0"}
+            </div>
+          </div>
           {!user?.email ? (
             <Link to="/login" className="text-white hover:text-gray-300">
               Login

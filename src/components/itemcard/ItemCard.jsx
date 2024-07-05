@@ -5,6 +5,7 @@ import Watch from '../../assets/watch.png'
 import { useDispatch } from 'react-redux';
 import { addToCart } from '../../redux/cartSlice/cartSlice';
 import toast from 'react-hot-toast';
+import { Link } from 'react-router-dom'
 
 const ItemCard = ({ id,image, name, price, rating }) => {
   const dispatch=useDispatch();
@@ -16,6 +17,7 @@ const ItemCard = ({ id,image, name, price, rating }) => {
 
   return (
     <div className="max-w-sm bg-white cursor-pointer hover:shadow-2xl rounded overflow-hidden shadow-lg border border-gray-200">
+      <Link to={`/product/${id}`}>
       <div className="overflow-hidden">
       <img className="w-[85%] mx-auto md:w-[100%] md:h-[100%] hover:scale-[1.10] duration-150 object-cover" src={ Watch } alt={name} /> 
       </div>
@@ -27,6 +29,7 @@ const ItemCard = ({ id,image, name, price, rating }) => {
           <Rating style={{maxWidth:'120px'}} value={rating} readOnly={true} />
         </div>
       </div>
+      </Link>
       <div className="px-6  pb-2">
         <button className={`w-full text-black border border-black hover:bg-black hover:text-white text-md md:text-lg  font-bold py-2 px-4 rounded active:scale-[0.95] duration-100`}
         onClick={handleAddProductToCart}>

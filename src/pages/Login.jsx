@@ -37,9 +37,16 @@ const Login = () => {
             alert(data.message);
             return;
         }
-   
-          navigate('../home')
+
+        if(sessionStorage.getItem('redirect')){
           dispatch(setUser(data.user))
+          navigate(sessionStorage.getItem('redirect'))
+          sessionStorage.removeItem('redirect')
+          return;
+        }
+          dispatch(setUser(data.user))
+          navigate('/home')
+   
           return;
       }
 

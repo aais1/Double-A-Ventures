@@ -1,36 +1,49 @@
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useState } from "react";
 import { Rating } from "@smastrom/react-rating";
 import "@smastrom/react-rating/style.css";
 import toast from "react-hot-toast";
+import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart } from "../redux/cartSlice/cartSlice";
 
 const Product = () => {
   const { id } = useParams();
   const [rating, setRating] = useState(0); 
   const [review,setReview]=useState(''); 
+  const dispatch=useDispatch();
+  const {user}=useSelector(state=>state.user)
 
   const handleReviewSubmit = async () => {
     // eslint-disable-next-line no-useless-catch
     try {
-      const resp = await fetch(`http://localhost:3000/products/${id}/reviews`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          rating,
-          review
-        })
-      });
-      const data = await resp.json();
+      const {data} = await axios.post(`http://localhost:3000/products/${id}/review`, 
+        {
+          username:'dummy',
+          ProductId:id,
+          ReviewText:review,
+          Rating:rating
+        });
       return data; // Return the data to handle success case
     } catch (error) {
       throw error; // Throw error to handle failure case
     }
   }
   
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
+    if(review.length<5){
+      toast.error('Review must be at least 5 characters long');
+      return;
+    }
+    if(review.length>70){
+      toast.error('Review must be at less than 70 characters long');
+      return;
+    }
+    if(rating===0){
+      toast.error('Please select a rating');
+      return;
+    }
     try {
       const promise = handleReviewSubmit(); // Call the async function and get the promise
       toast.promise(promise, {
@@ -50,26 +63,16 @@ const Product = () => {
       toast.error('Failed to submit review'); // Handle any synchronous errors
     }
   }
+
   
-  // Assuming you trigger handleReviewSubmit somewhere, for example on form submit
-  // Make sure handleSubmit is called instead:
-  // Example: <form onSubmit={handleSubmit}>
   
-  // const [product,setProduct]=useState({});
-
-  // const fetchProduct= async ()=>{
-  //     const resp=await fetch(`http://localhost:3000/products/${id}`);
-  //     const data=await resp.json();
-  //     setProduct(data);
-  // }
-
-  // fetchProduct();
-
   const product = {
+    id:823647234,
     name: "Wireless Bluetooth Headphones",
     description:
       "High-quality wireless headphones with noise cancellation and 20 hours of battery life.not good batery life i know but yeah wat can i do i just need some static data so that the page looks good lol no but i will make it better soon i promise. Thanks :)",
-    price: "$59.99",
+    price: 59.99,
+    quantity:1,
     rating:4
   };
 
@@ -77,7 +80,7 @@ const Product = () => {
     <div className="w-screen mx-auto  md:w-[95vw] p-1 md:p-4">
       <div className="flex  flex-col md:flex-row gap-y-8 md:gap-y-0 gap-x-8 my-2 ">
         <div className="flex h-[300px] gap-x-4 md:w-[45%] ">
-          <div>
+          <div className="flex-1">
             <img
               src="https://images.pexels.com/photos/341523/pexels-photo-341523.jpeg?auto=compress&cs=tinysrgb&w=400"
               className="bg-center  cursor-pointer  h-[100%] rounded-tl-md rounded-bl-md"
@@ -97,16 +100,20 @@ const Product = () => {
             />
           </div>
         </div>
-        <div className=" md:w-[60%]">
+        <div className="flex-1 lg:w-[60%]">
           <h1 className="text-2xl font-bold border-b mb-4">{product.name}</h1>
-          <p className="text-gray-500 w-[90%] md:w-[50%] mb-4">{product.description}</p>
+          <p className="text-gray-500 lg:w-[85%] mb-4">{product.description}</p>
           <p className="text-black font-semibold mb-2 text-lg">
-            Price: {product.price}
+            Price: {product.price}$
           </p>
           <p className="mb-4">
             <Rating style={{ maxWidth:'170px' }} value={product.rating} readOnly={true}  />
           </p>
-          <button className="bg-blue-500  text-white px-4 py-2 rounded">
+          <button className="bg-black text-md  text-white px-6 duration-150 active:scale-[0.90] md:px-14 py-2 rounded"
+          onClick={()=>{
+            toast.success('Product added to cart');
+            dispatch(addToCart(product))}
+            }>
             Add to Cart
           </button>
         </div>
@@ -114,6 +121,8 @@ const Product = () => {
       <br />
       <hr />
       <br />
+      {
+       user!=null?
       <div className="w-[90vw] md:w-[75vw] mx-auto">
         <form onSubmit={handleSubmit}>
 
@@ -136,6 +145,11 @@ const Product = () => {
         </button>
         </form>
       </div>
+      :
+      <p className="text-center"><Link onClick={()=>{
+        sessionStorage.setItem('redirect','/product/'+id);
+      }} className="font-semibold hover:underline text-blue-500" to="/login" >Login to submit a review</Link></p>
+      }
       <br />
       <hr />
       <div className="mt-4">

@@ -22,11 +22,10 @@ const ProductListing = () => {
     
 
     const handleAddProduct = async() => {
-
-        //make the req
-        const resp=await axios.post(import.meta.env.VITE_SERVER_URL+'/products', newProduct);
-        console.log(resp.data);
-        setNewProduct({
+        try {
+            //make the req
+            const resp=await axios.post(import.meta.env.VITE_SERVER_URL+'/products', newProduct);
+            setNewProduct({
             name: '',
             price: '',
             quantity: '',
@@ -34,6 +33,10 @@ const ProductListing = () => {
             description: '',
             images: [],
         });
+            alert('Product Added')
+        } catch (error) {
+            alert(error.message)
+        }
     };
 
     return (

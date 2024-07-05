@@ -2,6 +2,8 @@ import Cart from "../modals/Cart";
 import { addToCart } from '../redux/cartSlice/cartSlice'
 import { useDispatch } from "react-redux";
 import { Gallery,ItemCard } from "../components";
+import { useEffect } from "react";
+import axios from "axios";
 
 const Home = () => {
 
@@ -29,6 +31,14 @@ const Home = () => {
       rating: 0,
     },
   ];
+
+  useEffect(()=>{
+    const fetchProducts=async()=>{
+        const resp=await axios.get(`${import.meta.env.VITE_SERVER_URL}/products`);
+        console.log(resp.data)
+    }
+      fetchProducts()
+  },[])
   
   
   return (
