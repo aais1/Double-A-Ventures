@@ -3,6 +3,7 @@ import { FaUsers } from "react-icons/fa6";
 import { AiFillProduct } from "react-icons/ai";
 import { IoAnalyticsOutline } from "react-icons/io5";
 import { MdOutlineStore } from "react-icons/md";
+import { GoPackageDependents } from "react-icons/go";
 
 const AdminSideBar = () => {
   const navigate=useNavigate();
@@ -25,6 +26,12 @@ const AdminSideBar = () => {
           className=" w-[90%] justify-between flex items-center gap-x-4 mt-4 hover:text-white text-gray-300"
         >
           List Product <AiFillProduct style={{ fontSize: "2rem" }} />
+        </Link>
+        <Link
+          to="./orders"
+          className="w-[90%] justify-between mt-4 flex items-center gap-x-4 hover:text-white text-gray-300 mb-4"
+        >
+          Orders <GoPackageDependents style={{ fontSize: "2rem" }} />
         </Link>
         <Link
           to="./users"

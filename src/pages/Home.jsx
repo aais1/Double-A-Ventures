@@ -3,11 +3,14 @@ import { addToCart } from '../redux/cartSlice/cartSlice'
 import { useDispatch } from "react-redux";
 import { Gallery,ItemCard } from "../components";
 import { useEffect } from "react";
+import { useCart } from "../context/CartContext";
 import axios from "axios";
 
 const Home = () => {
 
   const dispatch=useDispatch();
+  const { setShowCart } = useCart();
+
   const products = [
     {
       id: 1,
@@ -31,6 +34,12 @@ const Home = () => {
       rating: 0,
     },
   ];
+  
+  if(sessionStorage.getItem('showCart')){
+    setShowCart(true)
+    sessionStorage.removeItem('showCart')
+  }
+  
 
   useEffect(()=>{
     const fetchProducts=async()=>{

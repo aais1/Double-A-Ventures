@@ -1,11 +1,13 @@
-import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useCart } from "../context/CartContext";
+import axios from "axios";
 import {
   increaseQuantity,
   decreaseQuantity,
 } from "../redux/cartSlice/cartSlice";
 import Watch from "../assets/watch.png";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 //card item component
 const CartItem = ({ id, name, price, quantity }) => {
@@ -17,6 +19,8 @@ const CartItem = ({ id, name, price, quantity }) => {
   const handleDecrease = (id) => {
     dispatch(decreaseQuantity(id));
   };
+
+
   return (
     <li
       key={id}
@@ -57,10 +61,33 @@ const CartModal = () => {
   const {cartItems,totalAmount} = useSelector((state) => state.cart);
   const dispatch = useDispatch();
   const { showCart, setShowCart } = useCart();
+  const {user}=useSelector(state=>state.user);
+  const navigate=useNavigate();
 
   const handleClose = () => {
     setShowCart(false);
   };
+
+  const handleCheckout=async()=>{
+    if(user==null){
+      //if there is no user and tries to checkout
+      //showCart will be true
+      //so that it will pop up the cart when the user logins
+      sessionStorage.removeItem('showCart');
+      sessionStorage.setItem('showCart',true);
+      navigate('/login')
+    }
+    //confiriming if user wants to proceed
+    if(window.confirm("Do you really want to checkout?")){ 
+      try {
+        const {data}=await axios.post(import.meta.env.VITE_SERVER_URL+'/orders',cartItems);
+        toast.success("Order Placed Successfully,Please wait for order placement confirmation");
+      } catch (error) {
+        console.log(error)
+        toast.error(error.message)
+      }
+    }
+    }
 
   return (
     <div
@@ -96,6 +123,7 @@ const CartModal = () => {
             <p className="font-bold">{totalAmount.toFixed(2)}$</p>
           </div>
           <button className={`w-full text-black border border-black hover:bg-black hover:text-white text-md md:text-lg  font-bold py-2 px-4 rounded active:scale-[0.95] duration-100`}
+          onClick={handleCheckout}
         >
           Checkout
         </button>

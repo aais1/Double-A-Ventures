@@ -4,9 +4,9 @@ const Notifications = ({ notifications, showNotifications }) => {
     <div
       className={`${
         showNotifications
-          ? `translate-y-4 opacity-100`
-          : `-translate-y-[150%] opacity-0`
-      } absolute right-7 -z-50 transition-all duration-250 bg-black p-2 rounded-lg`}
+          ? `scale-100 opacity-100`
+          : `scale-0 opacity-0`
+      } absolute right-7 md:right-0 top-16 -z-50 transition-all duration-250 bg-black p-2 rounded-lg`}
     >
       <div className=" w-[450px] max-h-[200px] overflow-y-scroll scrollbar p-2">
         {notifications.length !== 0 ? (
