@@ -5,10 +5,14 @@ import { useSelector, useDispatch } from "react-redux";
 import { removeUser } from "../../redux/userSlice/userSlice";
 import { useNavigate } from "react-router-dom";
 import { AiOutlineShoppingCart } from "react-icons/ai";
+import { MdNotificationsNone } from "react-icons/md";
 import { CgProfile } from "react-icons/cg";
+import Notifications from './Notifications'
 
 const Header = () => {
   const [search, setSearch] = useState();
+  const [showNotifications,setShowNotifications]=useState(false)
+  const [notifications,setNotifications]=useState([]);
   const { showCart, setShowCart } = useCart();
   const { user } = useSelector((state) => state.user);
   const [showMenu, setShowMenu] = useState(false);
@@ -22,6 +26,8 @@ const Header = () => {
     // navigate("/login");
   };
 
+
+
   function handleScroll() {
     if(window.scrollY>100){
     headerRef.current.style.opacity =0.95
@@ -31,10 +37,16 @@ const Header = () => {
   }
 
   useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
+    // Generate dummy notifications
+    const dummyNotifications = ["Notification 1", "Notification 2", "Notification 3"];
+    setNotifications(dummyNotifications);
+
+    window.addEventListener('scroll',handleScroll)
+
+    return ()=>{
+      window.removeEventListener('scroll',handleScroll)
+    }
+
   }, []);
 
   useEffect(()=>{
@@ -61,7 +73,7 @@ const Header = () => {
           </div>
           <div className="relative">
           <button
-            className="text-white hover:text-gray-300 flex items-center gap-x-1"
+            className="text-white hover:text-gray-300 flex items-center gap-x-2"
             href="#"
             onClick={() => setShowCart(!showCart)}
           >
@@ -77,14 +89,21 @@ const Header = () => {
             </Link>
           ) : (
             user !== null && ( // added null check here
-              <div className="relative top-1">
-                <div>
+              <div className="relative top-0">
+                <div className="flex gap-x-2 items-center">
                   <button
                     onClick={() => setShowMenu(!showMenu)}
-                    className="text-white hover:text-gray-300"
+                    className="text-white hover:text-gray-300 block"
                   >
                     <CgProfile style={{ fontSize: "2.4rem" }} />
                   </button>
+                  <div className="cursor-pointer relative">
+                    <MdNotificationsNone 
+                    style={{ fontSize: "2.5rem",color:'white' }}
+                    onClick={()=>setShowNotifications(!showNotifications)}
+                     />
+                    <Notifications notifications={notifications} showNotifications={showNotifications}/>
+                  </div>
                 </div>
                 {showMenu && (
                   <div className="z-30 absolute top-10 -left-8 flex flex-col gap-y-2 bg-white rounded-lg gap-1 font-semibold p-1">
