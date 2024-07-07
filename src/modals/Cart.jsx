@@ -8,6 +8,8 @@ import {
 import Watch from "../assets/watch.png";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useRef } from "react";
 
 //card item component
 const CartItem = ({ id, name, price, quantity }) => {
@@ -63,6 +65,8 @@ const CartModal = () => {
   const { showCart, setShowCart } = useCart();
   const {user}=useSelector(state=>state.user);
   const navigate=useNavigate();
+  const [address,setAddress]=useState('');
+  const addressRef=useRef();
 
   const handleClose = () => {
     setShowCart(false);
@@ -77,10 +81,21 @@ const CartModal = () => {
       sessionStorage.setItem('showCart',true);
       navigate('/login')
     }
+
+    if(address.trim()===''){
+      toast.error('Address is required');
+      addressRef.current.focus();
+      return;
+    }
     //confiriming if user wants to proceed
     if(window.confirm("Do you really want to checkout?")){ 
       try {
-        const {data}=await axios.post(import.meta.env.VITE_SERVER_URL+'/orders',cartItems);
+        const {data}=await axios.post(import.meta.env.VITE_SERVER_URL+'/orders',{
+          userId:user.id,
+          cartItems,
+          address
+        });
+
         toast.success("Order Placed Successfully,Please wait for order placement confirmation");
       } catch (error) {
         console.log(error)
@@ -118,6 +133,14 @@ const CartModal = () => {
               <CartItem key={item.id} {...item} />
             ))}
           </ul>
+          <div className="mt-2">
+            <input type="text"
+            placeholder="Enter your Address"
+            value={address}
+            ref={addressRef}
+            className="border border-black w-[100%] py-2 px-3"
+            onChange={(e)=>setAddress(e.target.value)} />
+          </div>
           <div className="text-right mb-2">
             <p className="text-gray-500 font-semibold mt-2">Total</p>
             <p className="font-bold">{totalAmount.toFixed(2)}$</p>

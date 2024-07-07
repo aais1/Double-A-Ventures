@@ -4,16 +4,16 @@ const Notifications = ({ notifications, showNotifications }) => {
     <div
       className={`${
         showNotifications
-          ? `scale-100 opacity-100`
-          : `scale-0 opacity-0`
-      } absolute right-7 md:right-0 top-16 -z-50 transition-all duration-250 bg-black p-2 rounded-lg`}
+          ? ` opacity-100`
+          : ` opacity-0`
+      } absolute right-7 md:right-0 top-16 -z-50 transition-all bg-white  duration-150 rounded-xl`}
     >
-      <div className=" w-[450px] max-h-[200px] overflow-y-scroll scrollbar p-2">
+      <div className=" w-[400px] max-h-[290px] overflow-y-scroll scrollbar  rounded-xl border ">
         {notifications.length !== 0 ? (
           notifications.map((item, index) => (
             <div
               key={index}
-              className="bg-white text-black font-semibold rounded-sm p-2 my-2"
+              className="bg-white border-t border-b text-black font-semibold rounded-sm px-4 py-6 hover:bg-slate-100"
             >
               {item}
             </div>

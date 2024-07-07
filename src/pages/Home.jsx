@@ -2,38 +2,15 @@ import Cart from "../modals/Cart";
 import { addToCart } from '../redux/cartSlice/cartSlice'
 import { useDispatch } from "react-redux";
 import { Gallery,ItemCard } from "../components";
-import { useEffect } from "react";
+import { useEffect , useState } from "react";
 import { useCart } from "../context/CartContext";
 import axios from "axios";
 
 const Home = () => {
 
+  const [products,setProducts]=useState([]);
   const dispatch=useDispatch();
   const { setShowCart } = useCart();
-
-  const products = [
-    {
-      id: 1,
-      name: 'Shoe',
-      price: 69.99,
-      image: 'path_to_shoe_image',
-      rating: 3,
-    },
-    {
-      id: 2,
-      name: 'Watch',
-      price: 49.99,
-      image: '../../../watch.png',
-      rating:1,
-    },
-    {
-      id: 3,
-      name: 'Shirt',
-      price: 99.99,
-      image: 'path_to_shirt_image',
-      rating: 0,
-    },
-  ];
   
   if(sessionStorage.getItem('showCart')){
     setShowCart(true)
@@ -44,7 +21,7 @@ const Home = () => {
   useEffect(()=>{
     const fetchProducts=async()=>{
         const resp=await axios.get(`${import.meta.env.VITE_SERVER_URL}/products`);
-        console.log(resp.data)
+        setProducts(resp.data)
     }
       fetchProducts()
   },[])
@@ -63,10 +40,10 @@ const Home = () => {
         <div key={product.id}>
         <ItemCard
           id={product.id}
-          image={product.image}
+          image={product.images[0]}
           name={product.name}
           price={product.price}
-          rating={product.rating}
+          rating={product?.rating}
         />
         </div>
       ))}

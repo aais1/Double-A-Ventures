@@ -18,8 +18,8 @@ const ItemCard = ({ id,image, name, price, rating }) => {
   return (
     <div className="max-w-sm bg-white cursor-pointer hover:shadow-2xl rounded overflow-hidden shadow-lg border border-gray-200">
       <Link to={`/product/${id}`}>
-      <div className="overflow-hidden">
-      <img className="w-[85%] mx-auto md:w-[100%] md:h-[100%] hover:scale-[1.10] duration-150 object-cover" src={ Watch } alt={name} /> 
+      <div className="overflow-hidden h-[220px]">
+      <img className="w-[85%] mx-auto md:w-[100%]  hover:scale-[1.10] duration-150 object-cover" src={ image || Watch } alt={name} /> 
       </div>
       <div className="px-6 md:py-4">
         <div className="font-bold text-sm md:text-md mb-2">{name}</div>

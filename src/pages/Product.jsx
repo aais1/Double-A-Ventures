@@ -1,5 +1,5 @@
 import { Link, useParams } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Rating } from "@smastrom/react-rating";
 import "@smastrom/react-rating/style.css";
 import toast from "react-hot-toast";
@@ -8,6 +8,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../redux/cartSlice/cartSlice";
 
 const Product = () => {
+  const [product,setProduct]=useState({});
+  const [reviews,setReviews]=useState([]);
   const { id } = useParams();
   const [rating, setRating] = useState(0); 
   const [review,setReview]=useState(''); 
@@ -64,17 +66,20 @@ const Product = () => {
     }
   }
 
-  
-  
-  const product = {
-    id:823647234,
-    name: "Wireless Bluetooth Headphones",
-    description:
-      "High-quality wireless headphones with noise cancellation and 20 hours of battery life.not good batery life i know but yeah wat can i do i just need some static data so that the page looks good lol no but i will make it better soon i promise. Thanks :)",
-    price: 59.99,
-    quantity:1,
-    rating:4
-  };
+  useEffect(()=>{
+    const fetchData=async()=>{
+      const {data}=await axios.get(import.meta.env.VITE_SERVER_URL+'/products/'+id);
+      setProduct(data);
+    }
+
+    const fetchReviews=async()=>{
+      const {data}=await axios.get(import.meta.env.VITE_SERVER_URL+'/products/'+id+'/review');
+      console.log(data)
+    }
+
+    fetchData();
+    fetchReviews()
+  },[])
 
   return (
     <div className="w-screen mx-auto  md:w-[95vw] p-1 md:p-4">
@@ -82,8 +87,8 @@ const Product = () => {
         <div className="flex h-[300px] gap-x-4 md:w-[45%] ">
           <div className="w-[100%] overflow-hidden">
             <img
-              src="https://images.pexels.com/photos/341523/pexels-photo-341523.jpeg?auto=compress&cs=tinysrgb&w=400"
-              className="bg-center  cursor-pointer duration-150 hover:scale-105  h-[100%] rounded-tl-md rounded-bl-md"
+              src={ product?.images ? product.images[0] : "https://images.pexels.com/photos/341523/pexels-photo-341523.jpeg?auto=compress&cs=tinysrgb&w=400"}
+              className="bg-center  cursor-pointer duration-150 hover:scale-105 w-[100%]  h-[100%] rounded-tl-md rounded-bl-md"
               style={{ backgroundColor: "gray" }}
             />
           </div>
@@ -156,37 +161,30 @@ const Product = () => {
       }
       <br />
       <hr />
+      
       <div className="mt-4">
         <h2 className="text-xl font-bold">Reviews</h2>
         <div className="flex flex-col md:flex-row flex-wrap gap-x-2 mt-2">
-          <div className="flex items-center">
-            <img
-              src="https://via.placeholder.com/50"
-              alt="User Avatar"
-              className="w-10 h-10 rounded-full"
-            />
-            <div className="ml-2">
-              <h3 className="font-bold">John Doe</h3>
-              <p className="text-gray-500">Rating: 4.5</p>
-              <p className="text-gray-500">
-                "Great product! Highly recommended."
-              </p>
+          {
+            reviews.length===0?<p className="font-semibold text-lg p-2">No Reviews Yet</p>:
+            reviews.map((review)=>(
+              <div key={review.id} className="flex items-center">
+              <img
+                src="https://via.placeholder.com/50"
+                alt="User Avatar"
+                className="w-10 h-10 rounded-full"
+              />
+              <div className="ml-2">
+                <h3 className="font-bold">{review.username}</h3>
+                <p className="text-gray-500">{review.rating}</p>
+                <p className="text-gray-500">
+                  {review.reviewText}
+                </p>
+                <span className="text-sm text-gray-500">{review.createdAt.toString()}</span>
+              </div>
             </div>
-          </div>
-          <div className="flex items-center">
-            <img
-              src="https://via.placeholder.com/50"
-              alt="User Avatar"
-              className="w-10 h-10 rounded-full"
-            />
-            <div className="ml-2">
-              <h3 className="font-bold">Jane Smith</h3>
-              <p className="text-gray-500">Rating: 5.0</p>
-              <p className="text-gray-500">
-                "Excellent quality. Worth every penny."
-              </p>
-            </div>
-          </div>
+            ))
+          }
         </div>
       </div>
       <br />

@@ -1,57 +1,49 @@
 import axios from "axios";
+import { useState, useEffect } from "react";
+import toast from "react-hot-toast";
 
 const AllProducts = () => {
-    const fetchData=async()=>{
+    const [products, setProducts] = useState([]);
+
+    const fetchData = async () => {
         try {
-            const {data}=await axios.get(import.meta.env.VITE_SERVER_URL+"/products");
+            const { data } = await axios.get(import.meta.env.VITE_SERVER_URL + "/products");
+            setProducts(data);
+            console.log(data)
         } catch (error) {
-            alert(error.message)
+            alert(error.message);
         }
-    }
-    fetchData();
-    
-    const data=[
-        {
-            id:1,
-            name:'Lorem Ipsum Istratum',
-            price:100,
-            description:'Lorem ipsum dolor sit amet consectetur adipisicing elit. In voluptatum est rerum omnis quasi explicabo similique eum doloribus quo necessitatibus exercitationem laboriosam nemo, porro illo ut voluptate minus ad quaerat.',
-            images:['https://via.placeholder.com/150','https://via.placeholder.com/150','https://via.placeholder.com/150']
-        },{
-            id:2,
-            name:'Lorem Ipsum Istratum',
-            price:100,
-            description:'Lorem ipsum dolor sit amet consectetur adipisicing elit. In voluptatum est rerum omnis quasi explicabo similique eum doloribus quo necessitatibus exercitationem laboriosam nemo, porro illo ut voluptate minus ad quaerat.',
-            images:['https://via.placeholder.com/150','https://via.placeholder.com/150','https://via.placeholder.com/150']
+    };
+
+    useEffect(() => {
+        fetchData();
+    }, []); // Empty dependency array ensures this runs only once after the initial render
+
+    const handleDelete = async (id) => {
+        if(!window.confirm('Are you sure you want to delete this product?')){
+            return;
         }
-    ]
+        try {
+            const { data } = await axios.delete(import.meta.env.VITE_SERVER_URL + "/products/" + id);
+
+            setProducts(products.filter(product => product.id !== id));
+            toast.success(data.message);
+        } catch (error) {
+            console.log(error)
+        }
+    };
+
+    const handleEdit = async (id) => {
+        // Handle edit logic here
+    };
 
     return (
         <div>
-            {/* <table className="w-[100%] text-left">
-                <tr>
-                    <th>Name</th>
-                    <th className="px-2">Price</th>
-                    <th>Description</th>
-                    <th>Images</th>
-                </tr>
-                {data.map((product) => (
-                    <tr key={product.id}>
-                        <td className="align-top font-semibold">{product.name}</td>
-                        <td className="align-top font-semibold px-2">{product.price}</td>
-                        <td className="max-w-[200px] align-top text-gray-700">{product.description}</td>
-                        <td className="flex flex-wrap gap-2 ">{
-                                product.images?.map(image=>(
-                                    <img key={product.id} src={image} alt={product.name} className="w-20 h-20"/>
-                                ))
-                            }
-                        </td>
-                    </tr>
-                ))}
-            </table> */}
             <div>
                 <div className="flex flex-col gap-4">
-                    {data.map((product,index) => (
+                    {
+                        products.length === 0 ? <p className="font-semibold text-lg">No products found,Add some :)</p> :
+                        products.map((product) => (
                         <div key={product.id} className="border border-gray-200 bg-white rounded-md p-1 md:p-4">
                             <div className="flex flex-col gap-3 ">
                                 <div>
@@ -60,26 +52,26 @@ const AllProducts = () => {
                                     <div className="flex justify-between items-center mt-4">
                                         <p className="text-lg font-semibold">${product.price}</p>
                                         <div className="space-x-2">
-                                            <button className="bg-blue-500 hover:bg-blue-800 duration-150 text-white px-4 py-1 rounded">Delete</button>
-                                            <button className="bg-green-500 hover:bg-green-800 duration-150 text-white px-4 py-1 rounded">Edit</button>
+                                            <button className="bg-blue-500 hover:bg-blue-800 duration-150 text-white px-4 py-1 rounded"
+                                                onClick={() => handleDelete(product.id)}>Delete</button>
+                                            <button className="bg-green-500 hover:bg-green-800 duration-150 text-white px-4 py-1 rounded"
+                                                onClick={() => handleEdit(product.id)}>Edit</button>
                                         </div>
                                     </div>
                                 </div>
                                 <div className="w-[100%] flex flex-wrap">
                                     {
-                                    product.images?.map(image=>(
-                                        <img key={product.id} src={image} alt={product.name} className="object-cover m-2"/>
-                                    ))
-                                    }
-                                </div>
+                                        product.images?.map((image, index) => (
+                                        <img key={index} src={image} alt={product.name} className="object-cover w-52 h-52 m-2" />
+                                    ))}
                                 </div>
                             </div>
+                        </div>
                     ))}
                 </div>
             </div>
         </div>
     );
-}
+};
 
-export default AllProducts
-
+export default AllProducts;
