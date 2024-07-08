@@ -5,22 +5,39 @@ const Orders = () => {
     const [orders,setOrders]=useState([]);
     useEffect(()=>{
         const fetchOrders=async()=>{
-            const {data}=axios.get(import.meta.VITE_SERVER_URL+"/orders");
-            console.log(data)
+            const {data}=await axios.get(import.meta.env.VITE_SERVER_URL+"/orders");
+
+            setOrders(data)
         }
         fetchOrders();
-    })
+    },[])
+
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        return date.toLocaleString(); // You can customize the format here
+      };
+      
   return (
     <div>
         <p className="border-b text-xl font-bold border-black text-center mb-2 md:mb-6">Orders to Aprove</p>
         {
-            orders.length===0?<div className="font-semibold text-lg">No orders to approve</div>:
-            orders.map(order=>(
-                <div key={order.id} className="bg-white p-2 my-2">
-                    <div>Order ID: {order.id}</div>
-                    <div>Order Date: {order.date}</div>
-                    <div>Order Total: {order.total}</div>
-                    <div>Order Status: {order.status}</div>
+            orders?.length===0?<div className="font-semibold text-lg">No orders to approve</div>:
+            orders && orders?.map(order=>(
+                <div key={order.orderId} className="bg-white p-2 my-2">
+                    <div>Order ID: {order.orderId}</div>
+                    <div>Order Total: {order.orderQuantity*order.productPrice}$</div>
+                    <div>Order Status: {!order.status&&'Not Approved'}</div>
+                    <div>Order Address: {order.orderAddress}</div>
+                    <div>User Email : {order.email}</div>
+                    <div>Product Name: {order.productName}</div>
+                    <div>Product Price: {order.productPrice}</div>
+                    <div>Product Quantity: {order.orderQuantity}</div>
+                    <div>Order Created At: {formatDate(order.orderCreatedAt)}</div>
+                    <div>
+                        <button className="w-[100%] bg-green-500 text-white py-2 hover:bg-green-700 duration-100 active:scale-95">
+                            Appove Order
+                        </button>
+                    </div>
                 </div>
             
             ))

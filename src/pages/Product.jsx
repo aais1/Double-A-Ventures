@@ -19,7 +19,7 @@ const Product = () => {
   const handleReviewSubmit = async () => {
     // eslint-disable-next-line no-useless-catch
     try {
-      const {data} = await axios.post(`http://localhost:3000/products/${id}/review`, 
+      const {data} = await axios.post(`http://localhost:3000/products/review/${id}`, 
         {
           username:'dummy',
           ProductId:id,
@@ -66,6 +66,11 @@ const Product = () => {
     }
   }
 
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleString(); // You can customize the format here
+  };
+
   useEffect(()=>{
     const fetchData=async()=>{
       const {data}=await axios.get(import.meta.env.VITE_SERVER_URL+'/products/'+id);
@@ -73,8 +78,8 @@ const Product = () => {
     }
 
     const fetchReviews=async()=>{
-      const {data}=await axios.get(import.meta.env.VITE_SERVER_URL+'/products/'+id+'/review');
-      console.log(data)
+      const {data}=await axios.get(import.meta.env.VITE_SERVER_URL+'/products/review/'+id);
+      setReviews(data);
     }
 
     fetchData();
@@ -170,21 +175,20 @@ const Product = () => {
         <h2 className="text-xl font-bold">Reviews</h2>
         <div className="flex flex-col md:flex-row flex-wrap gap-x-2 mt-2">
           {
-            reviews.length===0?<p className="font-semibold text-lg p-2">No Reviews Yet</p>:
-            reviews.map((review)=>(
-              <div key={review.id} className="flex items-center">
+            reviews?.length===0?<p className="font-semibold text-lg p-2">No Reviews Yet</p>:
+            reviews?.map((review)=>(
+              <div key={review.id} className="flex m-2 items-center">
               <img
                 src="https://via.placeholder.com/50"
                 alt="User Avatar"
                 className="w-10 h-10 rounded-full"
               />
               <div className="ml-2">
-                <h3 className="font-bold">{review.username}</h3>
-                <p className="text-gray-500">{review.rating}</p>
                 <p className="text-gray-500">
-                  {review.reviewText}
+                  {review.ReviewText}
                 </p>
-                <span className="text-sm text-gray-500">{review.createdAt.toString()}</span>
+                <Rating style={{ maxWidth:'70px' }} readOnly={true} value={review.Rating} onChange={setRating} />
+                <span className="text-sm text-gray-500">{formatDate(review.CreatedAt)}</span>
               </div>
             </div>
             ))

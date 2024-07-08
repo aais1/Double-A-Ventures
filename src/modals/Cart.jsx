@@ -93,7 +93,8 @@ const CartModal = () => {
         const {data}=await axios.post(import.meta.env.VITE_SERVER_URL+'/orders',{
           userId:user.id,
           cartItems,
-          address
+          address,
+          totalAmount
         });
 
         toast.success("Order Placed Successfully,Please wait for order placement confirmation");
