@@ -8,6 +8,7 @@ const Orders = () => {
             const {data}=await axios.get(import.meta.env.VITE_SERVER_URL+"/orders");
 
             setOrders(data)
+            console.log(data)
         }
         fetchOrders();
     },[])
@@ -33,9 +34,12 @@ const Orders = () => {
                     <div>Product Price: {order.productPrice}</div>
                     <div>Product Quantity: {order.orderQuantity}</div>
                     <div>Order Created At: {formatDate(order.orderCreatedAt)}</div>
-                    <div>
-                        <button className="w-[100%] bg-green-500 text-white py-2 hover:bg-green-700 duration-100 active:scale-95">
-                            Appove Order
+                    <div className="flex md:flex-row flex-col gap-2">
+                        <button className="w-[100%] rounded-md bg-green-500 text-white py-2 hover:bg-green-700 duration-100 active:scale-95">
+                            Appove
+                        </button>
+                        <button className="w-[100%] rounded-md bg-red-500 text-white py-2 hover:bg-red-700 duration-100 active:scale-95">
+                            Decline
                         </button>
                     </div>
                 </div>
