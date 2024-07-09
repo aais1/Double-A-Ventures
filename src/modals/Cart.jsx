@@ -74,12 +74,14 @@ const CartModal = () => {
 
   const handleCheckout=async()=>{
     if(user==null){
+      window.alert('You need to be logged in to checkout');
       //if there is no user and tries to checkout
       //showCart will be true
       //so that it will pop up the cart when the user logins
       sessionStorage.removeItem('showCart');
       sessionStorage.setItem('showCart',true);
       navigate('/login')
+      return;
     }
 
     if(address.trim()===''){
