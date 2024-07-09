@@ -31,6 +31,11 @@ const Product = () => {
       throw error; // Throw error to handle failure case
     }
   }
+
+  const fetchReviews=async()=>{
+    const {data}=await axios.get(import.meta.env.VITE_SERVER_URL+'/products/review/'+id);
+    setReviews(data);
+  }
   
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -59,7 +64,10 @@ const Product = () => {
         success:{
           duration:1800
         }
-      });
+      }).then(()=>{
+        fetchReviews();
+      })
+
     } catch (error) {
       console.error('Error submitting review:', error);
       toast.error('Failed to submit review'); // Handle any synchronous errors
@@ -77,11 +85,7 @@ const Product = () => {
       setProduct(data);
     }
 
-    const fetchReviews=async()=>{
-      const {data}=await axios.get(import.meta.env.VITE_SERVER_URL+'/products/review/'+id);
-      setReviews(data);
-    }
-
+  
     fetchData();
     fetchReviews()
   },[])
@@ -173,7 +177,7 @@ const Product = () => {
       
       <div className="mt-4">
         <h2 className="text-xl font-bold">Reviews</h2>
-        <div className="flex flex-col md:flex-row flex-wrap gap-x-2 mt-2">
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 ">
           {
             reviews?.length===0?<p className="font-semibold text-lg p-2">No Reviews Yet</p>:
             reviews?.map((review)=>(
