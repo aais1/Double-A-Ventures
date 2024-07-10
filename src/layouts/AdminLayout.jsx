@@ -3,11 +3,13 @@ import { AdminSideBar , ResponsiveMenu } from '../components/admin';
 import { AiOutlineMenu } from "react-icons/ai";
 import { useState } from 'react'
 import { RxCross2 } from "react-icons/rx";
+import { Toaster } from "react-hot-toast";
 
 const AdminLayout = () => {
   const [showMenu, setShowMenu] = useState(false);
   return (
     <div className="flex">
+      <Toaster/>
       <div className="md:w-[20%]">
         <AdminSideBar />
       </div>

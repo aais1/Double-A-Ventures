@@ -1,5 +1,6 @@
 import axios from "axios"
 import { useEffect , useState } from "react"
+import toast from "react-hot-toast";
 
 const Orders = () => {
     const [orders,setOrders]=useState([]);
@@ -12,6 +13,35 @@ const Orders = () => {
         }
         fetchOrders();
     },[])
+
+    const handleOrderReject=async(id)=>{
+        if(!window.confirm("Do you really want to delete this order")){
+            return;
+        }
+        try {
+            const {data}=await axios.delete(import.meta.env.VITE_SERVER_URL+"/orders/"+id);
+            setOrders(orders.filter(order=>order.orderId!==id))
+            toast.success("Order Rejected")
+        } catch (error) {
+            toast.error("Something went wrong Check Logs")
+        }
+
+    }
+
+    const handleOrderAccept=async(id)=>{
+        if(!window.confirm("Do you really want to confirm this order")){
+            return;
+        }
+        try {
+            const {data}=await axios.patch(import.meta.env.VITE_SERVER_URL+"/orders/"+id);
+            setOrders(orders.filter(order=>order.orderId!==id))
+            toast.success("Order Approved")
+        } catch (error) {
+            toast.error(error.message)
+        }
+
+    }
+
 
     const formatDate = (dateString) => {
         const date = new Date(dateString);
@@ -35,10 +65,12 @@ const Orders = () => {
                     <div>Product Quantity: {order.orderQuantity}</div>
                     <div>Order Created At: {formatDate(order.orderCreatedAt)}</div>
                     <div className="flex md:flex-row flex-col gap-2">
-                        <button className="w-[100%] rounded-md bg-green-500 text-white py-2 hover:bg-green-700 duration-100 active:scale-95">
+                        <button className="w-[100%] rounded-md bg-green-500 text-white py-2 hover:bg-green-700 duration-100 active:scale-95"
+                        onClick={()=>handleOrderAccept(order.orderId)}>
                             Appove
                         </button>
-                        <button className="w-[100%] rounded-md bg-red-500 text-white py-2 hover:bg-red-700 duration-100 active:scale-95">
+                        <button className="w-[100%] rounded-md bg-red-500 text-white py-2 hover:bg-red-700 duration-100 active:scale-95"
+                        onClick={()=>handleOrderReject(order.orderId)}>
                             Decline
                         </button>
                     </div>

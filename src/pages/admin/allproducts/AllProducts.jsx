@@ -25,11 +25,10 @@ const AllProducts = () => {
         }
         try {
             const { data } = await axios.delete(import.meta.env.VITE_SERVER_URL + "/products/" + id);
-
             setProducts(products.filter(product => product.id !== id));
             toast.success(data.message);
         } catch (error) {
-            console.log(error)
+            toast.error('Please try to clear all pending order for this product first');
         }
     };
 
