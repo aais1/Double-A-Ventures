@@ -1,4 +1,4 @@
-# Project Name
+# Full stack ecomerce site with admin dashboard
 
 A semester project for a web course.
 
