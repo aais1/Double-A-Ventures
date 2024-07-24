@@ -17,6 +17,7 @@ const Header = () => {
   const { user } = useSelector((state) => state.user);
   const [showMenu, setShowMenu] = useState(false);
   const {totalQuantity}=useSelector(state=>state.cart)
+  const [category,setCateogry]=useState('');
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const headerRef = useRef();
@@ -50,6 +51,12 @@ const Header = () => {
   }, []);
 
   useEffect(()=>{
+    if (category) {
+      navigate(`/products/${category}`);
+    }
+  },[category,navigate])
+
+  useEffect(()=>{
     console.log('searching')
   },[search])
 
@@ -71,6 +78,18 @@ const Header = () => {
               {/*Seaarch results here */}
             </div>
           </div>
+          
+          <select name="category" className="py-1 w-[50px] md:w-[120px]" value={category} id="category" onChange={(e)=>setCateogry(e.target.value)}>
+                    <option value="../" selected={true}>All</option>
+                    <option value="electronics">Electronics</option>
+                    <option value="clothing" >Clothing</option>
+                    <option value="books">Books</option>
+                    <option value="home & kitchen">Home & Kitchen</option>
+                    <option value="beauty & personal care">Beauty & Personal Care</option>
+                    <option value="sports & outdoors">Sports & Outdoors</option>
+                    <option value="toys & games">Toys & Games</option>
+                    <option value="health & wellness">Health & Wellness</option>
+                </select>
           <div className="relative">
           <button
             className="text-white hover:text-gray-300 flex items-center gap-x-2"

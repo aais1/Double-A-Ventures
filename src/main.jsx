@@ -11,7 +11,18 @@ import Layout from "./layouts/Layout.jsx";
 import { Provider } from "react-redux";
 import store from "./redux/store/store.js";
 import AdminLayout from "./layouts/AdminLayout.jsx";
-import { Login, Home, Product } from "./pages";
+import {
+  Login,
+  Home,
+  Product,
+  Clothing,
+  Book,
+  Electronics,
+  HomeKitchen,
+  BeautyPersonal,
+  SportsOutdoor,
+  HealthWellness,
+} from "./pages";
 import {
   AdminLogin,
   AllProducts,
@@ -21,6 +32,7 @@ import {
 } from "./pages/admin";
 import NotFound from "./pages/admin/NotFound.jsx";
 import { CartProvider } from "./context/CartContext.jsx";
+import ToysGames from "./pages/ToysGames.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -30,6 +42,20 @@ const router = createBrowserRouter(
         <Route path="/" element={<Home />} />
         <Route path="/home" element={<Home />} />
         <Route path="/product/:id" element={<Product />} />
+        <Route path="/products/clothing" element={<Clothing />} />
+        <Route path="/products/books" element={<Book />} />
+        <Route path="/products/electronics" element={<Electronics />} />
+        <Route path="/products/home & kitchen" element={<HomeKitchen />} />
+        <Route
+          path="/products/beauty & personal care"
+          element={<BeautyPersonal />}
+        />
+        <Route path="/products/sports & outdoors" element={<SportsOutdoor />} />
+        <Route path="/products/toys & games" element={<ToysGames />} />
+        <Route
+          path="/products/health & wellness"
+          element={<HealthWellness />}
+        />
       </Route>
       <Route path="/admin" element={<AdminLogin />} />
       <Route path="/admin/login" element={<AdminLogin />} />

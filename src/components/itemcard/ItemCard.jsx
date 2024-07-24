@@ -16,12 +16,12 @@ const ItemCard = ({ id,image, name, price, rating }) => {
   }
 
   return (
-    <div className="max-w-sm bg-white cursor-pointer hover:shadow-2xl rounded overflow-hidden shadow-lg border border-gray-200">
+    <div className="max-w-sm bg-white mx-auto cursor-pointer hover:shadow-2xl rounded overflow-hidden shadow-lg border border-gray-200">
       <Link to={`/product/${id}`}>
-      <div className="overflow-hidden h-[250px]">
-      <img className="w-[85%] mx-auto md:w-[100%] h-[100%]  hover:scale-[1.10] duration-150 object-cover" src={ image || Watch } alt={name} /> 
+      <div className="overflow-hidden h-[160px] w-[100%] md:h-[250px]">
+      <img className="w-[100%] md:w-[100%] h-[100%]  hover:scale-[1.10] duration-150 object-cover" src={ image || Watch } alt={name} /> 
       </div>
-      <div className="px-6 md:py-4">
+      <div className="px-6 md:py-4 mt-2 md:mt-4">
         <div className="font-bold text-sm md:text-md mb-2">{name}</div>
         {/* <p className="text-gray-700 text-base">Lorem ipsum dolor sit amet.</p> */}
         <p className="text-lg md:text-xl font-bold mt-2">{price}$</p>
